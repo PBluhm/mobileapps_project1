@@ -29,7 +29,7 @@ class CurrentUserExpenses {
       }
     }
 
-    DateTime changedDate = DateTime.parse(date);
+    DateTime changedDate = DateTime.parse(date).toUtc();
 
     userExpenses.add(Expenses(tempCat,theExpense,changedDate,price));
 
