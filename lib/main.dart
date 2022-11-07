@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'listofexpenses.dart';
 import 'myexpense_class.dart';
+import 'addExpensePage.dart';
+import 'package:intl/intl.dart';
 
 CurrentUserExpenses myUser = CurrentUserExpenses();
+DateTime currentTime = DateTime.now();
+DateFormat myFormat = DateFormat.yMd();
+String myCurrDate = myFormat.format(currentTime);
 
 void main() {
   myUser.myCategories.add(Category('Entertainment',const Icon(Icons.movie)));
@@ -14,37 +20,11 @@ class MyApp extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return MaterialApp(
-      home: TheDashBoard(),
+    return  MaterialApp(
+      home: MyExpenseList(),
     );
   }
 }
 
-class TheDashBoard extends StatefulWidget{
 
-  @override
-  State<TheDashBoard> createState() => TheDashBoardState();
-}
-
-class TheDashBoardState extends State<TheDashBoard>{
-
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard'),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.add)),
-        ],
-      ),
-      body: Column(
-        children: [
-
-        ],
-      ),
-    );
-  }
-}
 
