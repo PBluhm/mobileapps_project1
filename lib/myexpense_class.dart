@@ -21,6 +21,7 @@ class Expenses {
 class CurrentUserExpenses {
   List<Expenses> userExpenses = [];
   List<Category> myCategories = [];
+  String usersCurrency = '\$';
 
   void addNewExpense(
       String category, String theExpense, String date, double price) {

@@ -38,6 +38,10 @@ class AddExpenseState extends State<AddExpense> {
     setState(() {
       if (_formKey.currentState!.validate()){
         myUser.addNewExpense(userSelectedCategory, userSelectedExpense, userSelectedDate, userSelectedAmount);
+        _formKey.currentState!.reset();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Saving Expense'))
+        );
       }
     });
   }

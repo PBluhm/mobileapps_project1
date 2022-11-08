@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobileapps_project1/dashboard.dart';
 import 'listofexpenses.dart';
 import 'myexpense_class.dart';
 import 'addExpensePage.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return  MaterialApp(
-      home: MyExpenseList(),
+      home: TheDashBoard(),
     );
   }
 }

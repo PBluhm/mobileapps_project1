@@ -1,7 +1,9 @@
+import 'package:mobileapps_project1/usersearch.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'addExpensePage.dart';
 import 'myexpense_class.dart';
+import 'dashboard.dart';
 
 class MyExpenseList extends StatefulWidget {
   @override
@@ -34,10 +36,63 @@ class MyExpenseListState extends State<MyExpenseList> {
               icon: const Icon(Icons.add),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                showSearch(
+                  context: context,
+                  delegate: CustomerSearchDelegate(),
+                );
+              },
               icon: const Icon(Icons.search),
             ),
           ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text('Dashboard'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TheDashBoard(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.money),
+                title: const Text('Expenses'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => MyExpenseList(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.add),
+                title: const Text('Add Expense'),
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => AddExpense(),
+                    ),
+                  );
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.category),
+                title: const Text('Add New Category'),
+              ),
+              ListTile(
+                leading: const Icon(Icons.settings),
+                title: const Text('User Settings'),
+              ),
+            ],
+          ),
         ),
         body: Column(
           children: [
@@ -53,7 +108,7 @@ class MyExpenseListState extends State<MyExpenseList> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           leading: myUser.specifiedMonth(myCurrDate, true)[index].theCategory.catIcon,
-                          trailing: Text('${myUser.specifiedMonth(myCurrDate, true)[index].price}'),
+                          trailing: Text('${myUser.usersCurrency}${myUser.specifiedMonth(myCurrDate, true)[index].price}'),
                           title: Text(myUser.specifiedMonth(myCurrDate, true)[index].typeOfExpense),
                         );
                       })),
@@ -70,7 +125,7 @@ class MyExpenseListState extends State<MyExpenseList> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           leading: myUser.specifiedMonth(myUser.startDateChange(currentTime, 1, false), true)[index].theCategory.catIcon,
-                          trailing: Text('${myUser.specifiedMonth(myUser.startDateChange(currentTime, 1, false), true)[index].price}'),
+                          trailing: Text('${myUser.usersCurrency}${myUser.specifiedMonth(myUser.startDateChange(currentTime, 1, false), true)[index].price}'),
                           title: Text(myUser.specifiedMonth(myUser.startDateChange(currentTime, 1, false), true)[index].typeOfExpense),
                         );
                       })),
