@@ -127,6 +127,7 @@ class TheDashBoardState extends State<TheDashBoard> {
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text('User Settings'),
+              onTap: () {},
             ),
           ],
         ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'addExpensePage.dart';
 import 'myexpense_class.dart';
 import 'dashboard.dart';
+import 'addcategory.dart';
 
 class MyExpenseList extends StatefulWidget {
   @override
@@ -54,10 +55,11 @@ class MyExpenseListState extends State<MyExpenseList> {
                 leading: const Icon(Icons.home),
                 title: const Text('Dashboard'),
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => TheDashBoard(),
                     ),
+                        (route) => false,
                   );
                 },
               ),
@@ -65,10 +67,11 @@ class MyExpenseListState extends State<MyExpenseList> {
                 leading: const Icon(Icons.money),
                 title: const Text('Expenses'),
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => MyExpenseList(),
                     ),
+                        (route) => false,
                   );
                 },
               ),
@@ -76,20 +79,30 @@ class MyExpenseListState extends State<MyExpenseList> {
                 leading: const Icon(Icons.add),
                 title: const Text('Add Expense'),
                 onTap: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => AddExpense(),
                     ),
+                        (route) => false,
                   );
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.category),
                 title: const Text('Add New Category'),
+                onTap: () {
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(
+                      builder: (context) => AddCategory(),
+                    ),
+                        (route) => false,
+                  );
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.settings),
                 title: const Text('User Settings'),
+                onTap: () {},
               ),
             ],
           ),
