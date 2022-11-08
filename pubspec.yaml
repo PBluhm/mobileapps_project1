@@ -39,6 +39,7 @@ dependencies:
   pie_chart: ^5.0.0
   currency_picker: ^2.0.12
   intl: ^0.17.0
+  flutter_iconpicker: ^3.2.2
 
 dev_dependencies:
   flutter_test:

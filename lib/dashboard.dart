@@ -4,6 +4,7 @@ import 'package:pie_chart/pie_chart.dart';
 import 'addExpensePage.dart';
 import 'myexpense_class.dart';
 import 'listofexpenses.dart';
+import 'addcategory.dart';
 
 class TheDashBoard extends StatefulWidget {
   @override
@@ -115,6 +116,13 @@ class TheDashBoardState extends State<TheDashBoard> {
             ListTile(
               leading: const Icon(Icons.category),
               title: const Text('Add New Category'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => AddCategory(),
+                  ),
+                );
+              },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
