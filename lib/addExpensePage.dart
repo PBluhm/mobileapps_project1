@@ -10,6 +10,10 @@ class AddExpense extends StatefulWidget {
 
 class AddExpenseState extends State<AddExpense> {
   final _formKey = GlobalKey<FormState>();
+  late String userSelectedCategory = userDropDownItems[0].value!;
+  late String userSelectedDate;
+  late String userSelectedExpense;
+  late double userSelectedAmount;
 
   List<DropdownMenuItem<String>> get userDropDownItems {
     List<DropdownMenuItem<String>> myTempList = [];
@@ -20,11 +24,6 @@ class AddExpenseState extends State<AddExpense> {
     }
     return myTempList;
   }
-
-  late String userSelectedCategory = userDropDownItems[0].value!;
-  late String userSelectedDate;
-  late String userSelectedExpense;
-  late double userSelectedAmount;
 
   @override
   void initState() {
@@ -37,11 +36,11 @@ class AddExpenseState extends State<AddExpense> {
   void saveUserValue() {
     setState(() {
       if (_formKey.currentState!.validate()){
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Saving Expense'))
+        );
         myUser.addNewExpense(userSelectedCategory, userSelectedExpense, userSelectedDate, userSelectedAmount);
         _formKey.currentState!.reset();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Saving Expense'))
-        );
       }
     });
   }

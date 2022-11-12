@@ -13,14 +13,9 @@ class AddCategory extends StatefulWidget {
 
 class AddCategoryState extends State<AddCategory> {
   final _formKey = GlobalKey<FormState>();
-  late Icon selectedIcon;
-  late TextEditingController _myController;
+  late Icon selectedIcon = const Icon(Icons.access_alarm);
+  late String theCategory;
 
-  @override
-  void initState() {
-    super.initState();
-    _myController = TextEditingController();
-  }
 
   void addRemoveCat(bool add, String cat,
       [Icon myIcon = const Icon(Icons.clear)]) {
@@ -30,11 +25,17 @@ class AddCategoryState extends State<AddCategory> {
       for (int i = 0; i < myUser.myCategories.length; i++) {
         if (myUser.myCategories[i].categoryName.toLowerCase() ==
             cat.toLowerCase()) {
+          for(int j = 0; j < myUser.userExpenses.length; j++){
+            if(myUser.userExpenses[j].theCategory.categoryName.toLowerCase() == cat.toLowerCase()){
+              myUser.userExpenses.remove(myUser.userExpenses[j]);
+            }
+          }
           myUser.myCategories.remove(myUser.myCategories[i]);
           break;
         }
       }
     }
+    _formKey.currentState!.reset();
   }
 
   void pickIcon() async {
@@ -42,7 +43,8 @@ class AddCategoryState extends State<AddCategory> {
         iconPackModes: [IconPack.cupertino]);
 
     selectedIcon = Icon(tempIcon);
-    setState(() {});
+    setState(() {
+    });
   }
 
   @override
@@ -75,18 +77,6 @@ class AddCategoryState extends State<AddCategory> {
                   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(
                       builder: (context) => MyExpenseList(),
-                    ),
-                    (route) => false,
-                  );
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.add),
-                title: const Text('Add Expense'),
-                onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => AddExpense(),
                     ),
                     (route) => false,
                   );
@@ -132,30 +122,15 @@ class AddCategoryState extends State<AddCategory> {
                       }
                       return null;
                     },
+                    onChanged: (value) => theCategory = value,
                   ),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),
-                child: SizedBox(
-                  width: 200,
-                  height: 100,
-                  child: TextFormField(
-                    controller: _myController,
-                    decoration: const InputDecoration(
-                      hintText: 'Icon',
-                      border: OutlineInputBorder(),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please Choose and Icon';
-                      }
-                      return null;
-                    },
-                    onTap: () {
-                      pickIcon();
-                    },
-                  ),
+                child: ElevatedButton(
+                  onPressed: () => pickIcon(),
+                  child: const Text('Choose Icon'),
                 ),
               ),
               Row(
@@ -163,13 +138,13 @@ class AddCategoryState extends State<AddCategory> {
                 children: [
                   Flexible(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => addRemoveCat(false, theCategory),
                       child: const Text('Remove'),
                     ),
                   ),
                   Flexible(
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () => addRemoveCat(true, theCategory,selectedIcon),
                       child: const Text('Add'),
                     ),
                   ),

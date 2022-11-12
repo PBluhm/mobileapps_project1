@@ -76,18 +76,6 @@ class MyExpenseListState extends State<MyExpenseList> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.add),
-                title: const Text('Add Expense'),
-                onTap: () {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (context) => AddExpense(),
-                    ),
-                        (route) => false,
-                  );
-                },
-              ),
-              ListTile(
                 leading: const Icon(Icons.category),
                 title: const Text('Add New Category'),
                 onTap: () {
