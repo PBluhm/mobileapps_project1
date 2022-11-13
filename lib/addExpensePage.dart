@@ -33,121 +33,124 @@ class AddExpenseState extends State<AddExpense> {
     });
   }
 
-  void saveUserValue() {
+  void saveUserValue(BuildContext context) {
     setState(() {
-      if (_formKey.currentState!.validate()){
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Saving Expense'))
-        );
-        myUser.addNewExpense(userSelectedCategory, userSelectedExpense, userSelectedDate, userSelectedAmount);
+      if (_formKey.currentState!.validate()) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('Saving Expense')));
+        myUser.addNewExpense(userSelectedCategory, userSelectedExpense,
+            userSelectedDate, userSelectedAmount);
         _formKey.currentState!.reset();
       }
     });
   }
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-            title: const Text('Add New Expense'),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () {Navigator.pop(context);},
-            ),
-        ),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Flexible(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: 110,
-                        height: 100,
-                        child: TextFormField(
-                          initialValue: userSelectedDate,
-                          decoration: const InputDecoration(
-                            hintText: 'Date',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a valid value';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => userSelectedDate = value,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 200,
-                        height: 100,
-                        child: TextFormField(
-                          decoration: const InputDecoration(
-                            hintText: 'Amount',
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter a valid value';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) => userSelectedAmount = double.parse(value),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+  Widget build(BuildContext context) => ScaffoldMessenger(
+        child: Builder(
+          builder: (context) => Scaffold(
+            appBar: AppBar(
+              title: const Text('Add New Expense'),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 5),
-                child: SizedBox(
-                  height: 100,
-                  width: 200,
-                  child: DropdownButtonFormField(
+            ),
+            body: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          SizedBox(
+                            width: 110,
+                            height: 100,
+                            child: TextFormField(
+                              initialValue: userSelectedDate,
+                              decoration: const InputDecoration(
+                                hintText: 'Date',
+                                border: OutlineInputBorder(),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter a valid value';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) => userSelectedDate = value,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 200,
+                            height: 100,
+                            child: TextFormField(
+                              decoration: const InputDecoration(
+                                hintText: 'Amount',
+                                border: OutlineInputBorder(),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter a valid value';
+                                }
+                                return null;
+                              },
+                              onChanged: (value) =>
+                                  userSelectedAmount = double.parse(value),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
+                    child: SizedBox(
+                      height: 100,
+                      width: 200,
+                      child: DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                          ),
+                          value: userSelectedCategory,
+                          items: userDropDownItems,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              userSelectedCategory = newValue!;
+                            });
+                          }),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 200,
+                    height: 100,
+                    child: TextFormField(
                       decoration: const InputDecoration(
+                        hintText: 'Expense',
                         border: OutlineInputBorder(),
                       ),
-                      value: userSelectedCategory,
-                      items: userDropDownItems,
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          userSelectedCategory = newValue!;
-                        });
-                      }),
-                ),
-              ),
-              SizedBox(
-                width: 200,
-                height: 100,
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    hintText: 'Expense',
-                    border: OutlineInputBorder(),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid value';
+                        }
+                        return null;
+                      },
+                      onChanged: (value) => userSelectedExpense = value,
+                    ),
                   ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter a valid value';
-                    }
-                    return null;
-                  },
-                  onChanged: (value) => userSelectedExpense = value,
-                ),
+                  ElevatedButton(
+                    onPressed: () => saveUserValue(context),
+                    child: const Text('Save'),
+                  ),
+                ],
               ),
-              ElevatedButton(
-                  onPressed: () => saveUserValue(),
-                  child: const Text('Save'),
-              ),
-            ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
